@@ -2,6 +2,8 @@ package entities;
 
 import exceptions.InvalidCapacity;
 import exceptions.InvalidStorageType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 import java.util.Set;
@@ -10,6 +12,8 @@ public class Storage {
     private String capacity;
     private String type;
     private final Set<String> types = Set.of("HDD","SSD");
+
+    private static final Logger LOGGER = LogManager.getLogger(Storage.class);
 
     public Storage(String capacity, String type) throws InvalidCapacity, InvalidStorageType {
         if (capacity.startsWith("-") || capacity.isEmpty()){

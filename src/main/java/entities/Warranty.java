@@ -1,10 +1,15 @@
 package entities;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public final class Warranty {
     private final static int MAXDURATIONINMONTHS = 24;
 
+    private static final Logger LOGGER = LogManager.getLogger(Warranty.class);
+
     static{
-        System.out.println("The standard warranty has been created.");
+        LOGGER.info("The standard warranty has been created.");
     }
 
     public Warranty() {
@@ -15,15 +20,15 @@ public final class Warranty {
     }
 
     public final void showWarranty(){
-        System.out.println("The warranty duration is " + getMAXDURATIONINMONTHS() + " months.");
+        LOGGER.info("The warranty duration is {} months.", getMAXDURATIONINMONTHS());
     }
 
     public static void checkWarranty(){
         if (getMAXDURATIONINMONTHS() != 0){
-            System.out.println("The warranty is available");
+            LOGGER.info("The warranty is available");
         }
         else{
-            System.out.println("The warranty is not available");
+            LOGGER.info("The warranty is not available");
         }
     }
 }

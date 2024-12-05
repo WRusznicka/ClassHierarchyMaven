@@ -1,12 +1,16 @@
 import entities.*;
 import interfaces.*;
 import exceptions.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+    private static final Logger LOGGER = LogManager.getLogger(Main.class);
+
     public static void main(String[] args) {
         List<Battery> batteries = new ArrayList<>();
 
@@ -17,7 +21,7 @@ public class Main {
         Graphics graphics = new Graphics("Intel Graphics");
         Processor processor = new Processor("Intel Core Ultra 7 14gen 155U", 4.8f, 12, "12 MB");
         RAM ram = new RAM (32, "LPDDR5");
-        System.out.println("Dodano RAM:" + ram.toString() + "\nCould created RAM be upgrated by 4 GB? \n" + ram.isUpgradable());
+        LOGGER.info("Dodano RAM:" + ram.toString() + "\nCould created RAM be upgrated by 4 GB? \n" + ram.isUpgradable());
 
         Storage storage= new Storage();
         storage.setCapacity("1 TB");
@@ -26,35 +30,35 @@ public class Main {
         try{
         storage = new Storage("", "UNDEFINED");
         } catch (InvalidCapacity e) {
-            System.out.println("Invalid capacity!");
+            LOGGER.error("Invalid capacity!");
         } catch (InvalidStorageType e){
-            System.out.println("Invalid storage type!");
+            LOGGER.error("Invalid storage type!");
         }
 
         try {
             ram.setCapacity(0);
 
         }catch (InvalidRAMCapacity e){
-            System.out.println("Invalid capacity! RAM capacity has not been changed.");
+            LOGGER.error("Invalid capacity! RAM capacity has not been changed.");
         }
 
         try {
             battery.setNumberOfCells(0);
 
         }catch (InvalidNumberOfCells e){
-            System.out.println("Invalid number of cells! Number of cells has not been changed.");
+            LOGGER.error("Invalid number of cells! Number of cells has not been changed.");
         }
 
         try {
             display.setSize(0.0f);
 
         }catch (InvalidSize e){
-            System.out.println("Invalid size of display! Size of display has not been changed.");
+            LOGGER.error("Invalid size of display! Size of display has not been changed.");
         }
 
         String fileName = "src/resources/Laptop.txt";
 
-        System.out.println("The amount of laptops is " + Laptop.count);
+        LOGGER.info("The amount of laptops is " + Laptop.count);
 
         Computer laptop;
 
@@ -80,7 +84,7 @@ public class Main {
         connect(connectiableLaptop);
         connect(connectiableDesktop);
 
-        System.out.println("The amount of laptops is " + Laptop.count);
+        LOGGER.info("The amount of laptops is " + Laptop.count);
 
         Battery batteryToCompare = new Battery("Li-ion", 4, 63);
         batteries.add(batteryToCompare);
@@ -89,40 +93,40 @@ public class Main {
         RAM ramToCompare = new RAM (16, "LPDDR5");
         Storage storageToCompare = new Storage();
 
-        System.out.println("Amount of batteries added: " + batteries.size());
+        LOGGER.info("Amount of batteries added: " + batteries.size());
         for (Battery b: batteries){
-            System.out.println(b.toString());
+            LOGGER.info(b.toString());
         }
 
         processor.clearCache();
         processor.getDatesCacheCleared();
 
         CustomLinkedList<Computer> computersCreated = new CustomLinkedList<>();
-        System.out.println("List is created. Is it empty? " + computersCreated.isEmpty());
-        System.out.println("Added element... ");
+        LOGGER.info("List is created. Is it empty? " + computersCreated.isEmpty() + "\nAdded element... ");
         computersCreated.add(laptop);
-        System.out.println("Is list empty? " + computersCreated.isEmpty());
-        System.out.println(computersCreated.getFirst().getSpecifications());
+        LOGGER.info("Is list empty? " + computersCreated.isEmpty() + "\n" + computersCreated.getFirst().getSpecifications());
         computersCreated.add(desktop);
-        System.out.println("The amount of elements in list is: " + computersCreated.getSize());
+        LOGGER.info("The amount of elements in list is: " + computersCreated.getSize());
         computersCreated.printList();
 
         /* //printing comparation results
-        System.out.println("\n\nBattery hash code: " + battery.hashCode() + "\nBattery 2 hash code: " + batteryToCompare.hashCode());
-        System.out.println("\nComparation: " + battery.equals(batteryToCompare));
-        System.out.println("\n\nDisplay hash code: " + display.hashCode() + "\nDisplay 2 hash code: " + displayToCompare.hashCode());
-        System.out.println("\nComparation: " + display.equals(displayToCompare));
-        System.out.println("\n\nGraphics hash code: " + graphics.hashCode() + "\nGraphics 2 hash code: " + graphicsToCompare.hashCode());
-        System.out.println("\nComparation: " + graphics.equals(graphicsToCompare));
-        System.out.println("\n\nRAM hash code: " + ram.hashCode() + "\nRAM 2 hash code: " + ramToCompare.hashCode());
-        System.out.println("\nComparation: " + ram.equals(ramToCompare));
-        System.out.println("\n\nStorage hash code: " + storage.hashCode() + "\nStorage 2 hash code: " + storageToCompare.hashCode());
-        System.out.println("\nComparation: " + storage.equals(storageToCompare));
+        LOGGER.info("\n\nBattery hash code: " + battery.hashCode() + "\nBattery 2 hash code: " + batteryToCompare.hashCode());
+        LOGGER.info("\nComparation: " + battery.equals(batteryToCompare));
+        LOGGER.info("\n\nDisplay hash code: " + display.hashCode() + "\nDisplay 2 hash code: " + displayToCompare.hashCode());
+        LOGGER.info("\nComparation: " + display.equals(displayToCompare));
+        LOGGER.info("\n\nGraphics hash code: " + graphics.hashCode() + "\nGraphics 2 hash code: " + graphicsToCompare.hashCode());
+        LOGGER.info("\nComparation: " + graphics.equals(graphicsToCompare));
+        LOGGER.info("\n\nRAM hash code: " + ram.hashCode() + "\nRAM 2 hash code: " + ramToCompare.hashCode());
+        LOGGER.info("\nComparation: " + ram.equals(ramToCompare));
+        LOGGER.info("\n\nStorage hash code: " + storage.hashCode() + "\nStorage 2 hash code: " + storageToCompare.hashCode());
+        LOGGER.info("\nComparation: " + storage.equals(storageToCompare));
          */
+
+        TextReader.main();
     }
 
     public static void printSpecifications(Computer computer){
-        System.out.println("\n\n" + computer.getSpecifications());
+        LOGGER.info("\n\n" + computer.getSpecifications());
     }
 
     public static void connect(Connectable connectable){
@@ -143,7 +147,7 @@ public class Main {
                 data.add(reader.readLine());
             }
         } catch (Exception e) {
-            System.out.println("File not found or an error occurred while opening file.");
+            LOGGER.error("File not found or an error occurred while opening file.");
         }
 
         return data;

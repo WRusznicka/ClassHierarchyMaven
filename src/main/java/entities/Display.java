@@ -1,6 +1,8 @@
 package entities;
 
 import exceptions.InvalidSize;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -28,6 +30,8 @@ public class Display {
         sizes.add(15.6f);
     }
 
+    private static final Logger LOGGER = LogManager.getLogger(Display.class);
+
     public Display(String resolution, String type, int refreshRate, float size) {
         this.resolution = resolution;
         this.type = type;
@@ -36,7 +40,7 @@ public class Display {
             this.size = size;
         }
         else{
-            System.out.println("Acceptable sizes are (in sorted order): ");
+            LOGGER.error("Acceptable sizes are (in sorted order): ");
             getSizes();
             this.size = 14f;
         }
@@ -83,9 +87,8 @@ public class Display {
     public void getSizes(){
         Iterator<Float> iterator = sizes.iterator();
         while(iterator.hasNext()){
-            System.out.print(iterator.next() + ", ");
+            LOGGER.info(iterator.next() + ", ");
         }
-        System.out.println();
     }
 
     @Override

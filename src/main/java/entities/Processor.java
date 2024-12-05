@@ -1,5 +1,8 @@
 package entities;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +13,8 @@ public class Processor {
     private int numberOfCores;
     private String cache;
     public List<Date> datesCacheCleared = new ArrayList<>();
+
+    private static final Logger LOGGER = LogManager.getLogger(Processor.class);
 
     public Processor(String model, float maxFrequency, int numberOfCores, String cache) {
         this.model = model;
@@ -62,13 +67,13 @@ public class Processor {
     public void clearCache(){
         setCache("0");
         datesCacheCleared.add(new Date());
-        System.out.println("Cache has been cleared");
+        LOGGER.info("Cache has been cleared");
     }
 
     public void getDatesCacheCleared(){
-        System.out.println("Cache has been cleared on that days: ");
+        LOGGER.info("Cache has been cleared on that days: ");
         for(Date d: datesCacheCleared){
-            System.out.println(d);
+            LOGGER.info(d);
         }
     }
 

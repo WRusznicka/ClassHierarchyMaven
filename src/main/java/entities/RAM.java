@@ -3,6 +3,8 @@ package entities;
 import exceptions.InvalidRAMCapacity;
 import interfaces.ICheckUsage;
 import interfaces.Upgradable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +25,8 @@ public class RAM implements Upgradable, ICheckUsage {
         maxCapacityByType.put("LPDDR4", 32);
         maxCapacityByType.put("LPDDR5", 64);
     }
+
+    private static final Logger LOGGER = LogManager.getLogger(RAM.class);
 
     public RAM(int capacity, String type) {
         this.capacity = capacity;
@@ -87,12 +91,12 @@ public class RAM implements Upgradable, ICheckUsage {
             successUpgrade();
         }
         else{
-            System.out.println("RAM can not be upgraded");
+            LOGGER.info("RAM can not be upgraded");
         }
     }
 
     @Override
     public void checkUsage() {
-        System.out.println("Checking RAM usage...");
+        LOGGER.info("Checking RAM usage...");
     }
 }

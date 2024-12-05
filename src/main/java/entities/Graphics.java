@@ -1,9 +1,14 @@
 package entities;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 
 public class Graphics {
     private String model;
+
+    private static final Logger LOGGER = LogManager.getLogger(Graphics.class);
 
     public Graphics(String model) {
         this.model = model;

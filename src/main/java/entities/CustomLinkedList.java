@@ -1,8 +1,13 @@
 package entities;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class CustomLinkedList <D>{
     private CustomNode<D> head;
     private int size;
+
+    private static final Logger LOGGER = LogManager.getLogger(CustomLinkedList.class);
 
     public CustomLinkedList() {
     }
@@ -40,7 +45,7 @@ public class CustomLinkedList <D>{
 
     public void remove(D node){
         if(head == null){
-            System.out.println("List is empty. The element is not in list");
+            LOGGER.info("List is empty. The element is not in list");
         }
         else if(head.getData().equals(node)){
             head = head.getNext();
@@ -61,16 +66,16 @@ public class CustomLinkedList <D>{
 
     public void printList(){
         CustomNode<D> current = head;
-        System.out.println("Elements in linked list: ");
+        LOGGER.info("Elements in linked list: ");
         while(current != null){
-            System.out.print(current.getData().toString() + "->");
+            LOGGER.info(current.getData().toString() + "->");
             current = current.getNext();
         }
     }
 
     public D getFirst(){
         if(head == null){
-            System.out.println("List is empty, no elements found");
+            LOGGER.info("List is empty, no elements found");
             return null;
         }
         return head.getData();
@@ -79,7 +84,7 @@ public class CustomLinkedList <D>{
 
     public D getLast(){
         if(head == null){
-            System.out.println("List is empty, no elements found");
+            LOGGER.info("List is empty, no elements found");
             return null;
         }
         CustomNode<D> current = head;

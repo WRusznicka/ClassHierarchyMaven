@@ -1,9 +1,14 @@
 package interfaces;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public interface ICheckUsage {
-   void checkUsage();
+    Logger LOGGER = LogManager.getLogger(ICheckUsage.class);
+
+    void checkUsage();
 
    default void clearCache(){
-       System.out.println("Cache has been cleared");
+       LOGGER.info("Cache has been cleared");
    };
 }

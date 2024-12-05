@@ -3,6 +3,8 @@ package entities;
 import exceptions.InvalidCapacity;
 import exceptions.InvalidNumberOfCells;
 import interfaces.Replaceable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
@@ -10,6 +12,8 @@ public class Battery implements Replaceable {
     private String material;
     private int numberOfCells;
     private int capacity;
+
+    private static final Logger LOGGER = LogManager.getLogger(Battery.class);
 
     public Battery(String material, int numberOfCells, int capacity) {
         this.material = material;

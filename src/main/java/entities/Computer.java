@@ -1,5 +1,8 @@
 package entities;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public abstract class Computer{
     private String model;
     private String type;
@@ -9,6 +12,8 @@ public abstract class Computer{
     protected  RAM ram;
     protected  Storage storage;
     protected Warranty warranty;
+
+    private static final Logger LOGGER = LogManager.getLogger(Computer.class);
 
     public Computer(String model, String type, Display display, Graphics graphics, Processor processor, RAM ram, Storage storage) {
         this.model = model;

@@ -1,8 +1,13 @@
 package entities;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class CustomNode<D> {
     private D data;
     private CustomNode<D> next;
+
+    private static final Logger LOGGER = LogManager.getLogger(CustomNode.class);
 
     public CustomNode(D data) {
         this.data = data;

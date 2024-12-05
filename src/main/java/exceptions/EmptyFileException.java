@@ -1,7 +1,12 @@
 package exceptions;
 
+import entities.Warranty;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class EmptyFileException extends Exception {
+    private static final Logger LOGGER = LogManager.getLogger(EmptyFileException.class);
     public EmptyFileException() {
-        System.out.println("File is empty, no data found");
+        LOGGER.error("File is empty, no data found");
     }
 }
