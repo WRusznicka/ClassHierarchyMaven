@@ -1,47 +1,34 @@
 package entities;
 
+import enums.StorageType;
 import exceptions.InvalidCapacity;
 import exceptions.InvalidStorageType;
+import lombok.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Storage {
     private String capacity;
-    private String type;
-    private final Set<String> types = Set.of("HDD","SSD");
+    private StorageType type;
+   // private final Set<String> types = Set.of("HDD","SSD");
 
     private static final Logger LOGGER = LogManager.getLogger(Storage.class);
 
-    public Storage(String capacity, String type) throws InvalidCapacity, InvalidStorageType {
+    public Storage(String capacity, StorageType type) throws InvalidCapacity, InvalidStorageType {
         if (capacity.startsWith("-") || capacity.isEmpty()){
             throw new InvalidCapacity();
         }
-        if (!types.contains(type.toUpperCase())){
+        /*if (!types.contains(type.toUpperCase())){
             throw new InvalidStorageType();
-        }
+        }*/
         this.capacity = capacity;
-        this.type = type;
-    }
-
-    public Storage() {
-    }
-
-    public String getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(String capacity) {
-        this.capacity = capacity;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
         this.type = type;
     }
 
@@ -50,16 +37,4 @@ public class Storage {
         return "\n\nStorage\n\nType: " + getType() + "\nCapacity: " + getCapacity();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Storage storage = (Storage) o;
-        return Objects.equals(capacity, storage.capacity) && Objects.equals(type, storage.type);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(capacity, type);
-    }
 }

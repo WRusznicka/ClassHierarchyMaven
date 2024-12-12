@@ -1,39 +1,44 @@
 package entities;
 
+import enums.BatteryPowerLevel;
 import exceptions.InvalidCapacity;
 import exceptions.InvalidNumberOfCells;
+import interfaces.IFind;
 import interfaces.Replaceable;
+import lombok.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Arrays;
 import java.util.Objects;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Battery implements Replaceable {
     private String material;
     private int numberOfCells;
     private int capacity;
+    private BatteryPowerLevel batteryPowerLevel;
+    private int batteryPower;
 
     private static final Logger LOGGER = LogManager.getLogger(Battery.class);
 
-    public Battery(String material, int numberOfCells, int capacity) {
+    IFind<BatteryPowerLevel,Integer> findByPowerLevel = (power) -> {
+        for (BatteryPowerLevel level: BatteryPowerLevel.values()){
+            if (level.correctLevel(power)) return level;
+        }
+        return BatteryPowerLevel.CRITICAL;
+    };
+
+    public Battery(String material, int numberOfCells, int capacity, int batteryPower) {
         this.material = material;
         this.numberOfCells = numberOfCells;
         this.capacity = capacity;
-    }
-
-    public Battery() {
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
-    }
-
-    public int getNumberOfCells() {
-        return numberOfCells;
+        this.batteryPower = batteryPower;
+        this.batteryPowerLevel = findByPowerLevel.find(batteryPower);
     }
 
     public void setNumberOfCells(int numberOfCells) throws InvalidNumberOfCells {
@@ -41,10 +46,6 @@ public class Battery implements Replaceable {
             throw new InvalidNumberOfCells();
         }
         this.numberOfCells = numberOfCells;
-    }
-
-    public int getCapacity() {
-        return capacity;
     }
 
     public void setCapacity(int capacity)throws InvalidCapacity {
@@ -57,20 +58,7 @@ public class Battery implements Replaceable {
     @Override
     public String toString() {
         return "\n\nBattery\n\nMaterial: " + getMaterial() +
-                "\nNumber of cells: " + getNumberOfCells() + "\nCapacity: " + getCapacity() + "WHrs";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Battery battery = (Battery) o;
-        return numberOfCells == battery.numberOfCells && capacity == battery.capacity && Objects.equals(material, battery.material);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(material, numberOfCells, capacity);
+                "\nNumber of cells: " + getNumberOfCells() + "\nCapacity: " + getCapacity() + "WHrs\nPower level: " + getBatteryPower() + "-" + getBatteryPowerLevel();
     }
 
     @Override

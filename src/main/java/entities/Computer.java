@@ -1,8 +1,15 @@
 package entities;
 
+import enums.WarrantyType;
+import lombok.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public abstract class Computer{
     private String model;
     private String type;
@@ -23,26 +30,7 @@ public abstract class Computer{
         this.processor = processor;
         this.ram = ram;
         this.storage = storage;
-        this.warranty = new Warranty();
-    }
-
-    public Computer() {
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+        this.warranty = new Warranty(WarrantyType.LIMITED);
     }
 
     public String printSpecs(){

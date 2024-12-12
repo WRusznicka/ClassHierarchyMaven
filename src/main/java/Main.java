@@ -8,26 +8,35 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static enums.DisplayType.OLED;
+import static enums.RAMType.LPDDR5;
+import static enums.StorageType.HDD;
+import static enums.StorageType.SSD;
+
 public class Main {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         List<Battery> batteries = new ArrayList<>();
 
-        Battery battery = new Battery("Li-ion", 4, 63);
+        Battery battery = new Battery("Li-ion", 4, 63, 20);
         batteries.add(battery);
 
-        Display display = new Display("2880 x 1800", "OLED", 60, 13f);
+        Display display = new Display("2880 x 1800", OLED, 13f);
         Graphics graphics = new Graphics("Intel Graphics");
         Processor processor = new Processor("Intel Core Ultra 7 14gen 155U", 4.8f, 12, "12 MB");
-        RAM ram = new RAM (32, "LPDDR5");
+        RAM ram = new RAM (32, LPDDR5);
         LOGGER.info("Dodano RAM:" + ram.toString() + "\nCould created RAM be upgrated by 4 GB? \n" + ram.isUpgradable());
 
         Storage storage= new Storage();
         storage.setCapacity("1 TB");
-        storage.setType("SSD");
+        storage.setType(SSD);
 
-        try{
+        Storage storage2= new Storage();
+        storage2.setType(HDD);
+        LOGGER.info("SSD is faster? " + storage.getType().isFaster(storage2.getType().getMaxSpeed()));
+       /* //checking errors
+       try{
         storage = new Storage("", "UNDEFINED");
         } catch (InvalidCapacity e) {
             LOGGER.error("Invalid capacity!");
@@ -54,7 +63,7 @@ public class Main {
 
         }catch (InvalidSize e){
             LOGGER.error("Invalid size of display! Size of display has not been changed.");
-        }
+        }*/
 
         String fileName = "src/resources/Laptop.txt";
 
@@ -86,21 +95,36 @@ public class Main {
 
         LOGGER.info("The amount of laptops is " + Laptop.count);
 
-        Battery batteryToCompare = new Battery("Li-ion", 4, 63);
+        Battery batteryToCompare = new Battery("Li-ion", 4, 63, 60);
         batteries.add(batteryToCompare);
-        Display displayToCompare = new Display("2880 x 1800", "OLED", 60, 16.0f);
+        Display displayToCompare = new Display("2880 x 1800", OLED, 16.0f);
         Graphics graphicsToCompare = new Graphics("Intel Graphics");
-        RAM ramToCompare = new RAM (16, "LPDDR5");
+        RAM ramToCompare = new RAM (16, LPDDR5);
         Storage storageToCompare = new Storage();
 
+        IFilter<Battery, List<Battery>, String> filter = (list, level) ->{
+            for (Battery b : list){
+                if (b.getBatteryPowerLevel().toString().equals(level)) return b;
+            }
+            return null;
+        };
+        LOGGER.info("Searching for battery with LOW battery power level....Founded battery: " + filter.findInListByCriteria(batteries,"LOW").toString());
+
+        ICompare<Integer> comparePowersCharge = (x,y) -> {
+            if (x<y) LOGGER.info("The first battery has less % of power");
+            else if (x>y) LOGGER.info("The first battery has more % of power");
+            else LOGGER.info("Battery power in % is the same");
+        };
+        comparePowersCharge.compare(battery.getBatteryPower(), batteryToCompare.getBatteryPower());
+        /* //print info about created batteries list
         LOGGER.info("Amount of batteries added: " + batteries.size());
         for (Battery b: batteries){
             LOGGER.info(b.toString());
-        }
+        }*/
 
         processor.clearCache();
         processor.getDatesCacheCleared();
-
+        /* //Printing results on created lists
         CustomLinkedList<Computer> computersCreated = new CustomLinkedList<>();
         LOGGER.info("List is created. Is it empty? " + computersCreated.isEmpty() + "\nAdded element... ");
         computersCreated.add(laptop);
@@ -109,7 +133,7 @@ public class Main {
         LOGGER.info("The amount of elements in list is: " + computersCreated.getSize());
         computersCreated.printList();
 
-        /* //printing comparation results
+        //printing comparation results
         LOGGER.info("\n\nBattery hash code: " + battery.hashCode() + "\nBattery 2 hash code: " + batteryToCompare.hashCode());
         LOGGER.info("\nComparation: " + battery.equals(batteryToCompare));
         LOGGER.info("\n\nDisplay hash code: " + display.hashCode() + "\nDisplay 2 hash code: " + displayToCompare.hashCode());
@@ -120,9 +144,9 @@ public class Main {
         LOGGER.info("\nComparation: " + ram.equals(ramToCompare));
         LOGGER.info("\n\nStorage hash code: " + storage.hashCode() + "\nStorage 2 hash code: " + storageToCompare.hashCode());
         LOGGER.info("\nComparation: " + storage.equals(storageToCompare));
-         */
 
-        TextReader.main();
+
+        TextReader.main();*/
     }
 
     public static void printSpecifications(Computer computer){

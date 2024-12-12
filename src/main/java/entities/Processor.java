@@ -1,5 +1,6 @@
 package entities;
 
+import lombok.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -7,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Processor {
     private String model;
     private float maxFrequency;
@@ -20,41 +25,6 @@ public class Processor {
         this.model = model;
         this.maxFrequency = maxFrequency;
         this.numberOfCores = numberOfCores;
-        this.cache = cache;
-    }
-
-    public Processor() {
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public float getMaxFrequency() {
-        return maxFrequency;
-    }
-
-    public void setMaxFrequency(float maxFrequency) {
-        this.maxFrequency = maxFrequency;
-    }
-
-    public int getNumberOfCores() {
-        return numberOfCores;
-    }
-
-    public void setNumberOfCores(int numberOfCores) {
-        this.numberOfCores = numberOfCores;
-    }
-
-    public String getCache() {
-        return cache;
-    }
-
-    public void setCache(String cache) {
         this.cache = cache;
     }
 

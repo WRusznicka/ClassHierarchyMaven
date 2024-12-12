@@ -1,8 +1,16 @@
 package entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomNode<D> {
     private D data;
     private CustomNode<D> next;
@@ -14,19 +22,4 @@ public class CustomNode<D> {
         this.next = null;
     }
 
-    public D getData() {
-        return data;
-    }
-
-    public void setData(D data) {
-        this.data = data;
-    }
-
-    public CustomNode<D> getNext() {
-        return next;
-    }
-
-    public void setNext(CustomNode<D> next) {
-        this.next = next;
-    }
 }

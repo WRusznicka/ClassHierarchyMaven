@@ -1,32 +1,21 @@
 package entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomLinkedList <D>{
     private CustomNode<D> head;
     private int size;
 
     private static final Logger LOGGER = LogManager.getLogger(CustomLinkedList.class);
-
-    public CustomLinkedList() {
-    }
-
-    public CustomNode<D> getHead() {
-        return head;
-    }
-
-    public void setHead(CustomNode<D> head) {
-        this.head = head;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
 
     public void add(D node){
         CustomNode<D> newNode = new CustomNode<>(node);
