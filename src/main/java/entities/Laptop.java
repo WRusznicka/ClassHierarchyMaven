@@ -2,9 +2,13 @@ package entities;
 
 import interfaces.Connectable;
 import interfaces.Customizable;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@Getter
+@Setter
 public class Laptop extends Computer implements Connectable, Customizable {
     protected Battery battery;
     public static int count = 0;
